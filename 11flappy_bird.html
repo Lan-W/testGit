@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<canvas id="cvs" width="800" height="600" style="border: 1px solid red"></canvas>
+<body>
+<script src="./bird/util.js"></script>
+<script src="./bird/getImg.js"></script>
+<script src="./bird/sky.js"></script>
+<script src="./bird/bird.js"></script>
+<script src="./bird/land.js"></script>
+<script src="./bird/pipe.js"></script>
+<script src="./bird/text.js"></script>
+<script src="./bird/textDate.js"></script>
+<script>
+    // 游戏入口函数
+    (function main() {
+        var cvs = document.getElementById('cvs');
+        var ctx = cvs.getContext('2d');
+
+        getImgs(function (imgObj) {
+
+            // 先初始化天空类
+            // 创建两个天空实例
+            Sky.init(ctx, cvs, imgObj.sky);
+            var sky = new Sky(0, 0);
+            var sky2 = new Sky(imgObj.sky.width, 0);
+
+            // 初始化鸟类
+            Bird.init(ctx, cvs, imgObj.bird);
+            var bird = new Bird(50, 50, 50, 50);
+            bird.bind();
+
+            // 初始化大地类，创建四个大地实例
+            Land.init(ctx, cvs, imgObj.land);
+            var land = new Land(imgObj.land.width * 0, cvs.height - imgObj.land.height);
+            var land2 = new Land(imgObj.land.width * 1, cvs.height - imgObj.land.height);
+            var land3 = new Land(imgObj.land.width * 2, cvs.height - imgObj.land.height);
+            var land4 = new Land(imgObj.land.width * 3, cvs.height - imgObj.land.height);
+
+            // 初始化管道类，创建xx个管道实例
+            Pipe.init(ctx, cvs, imgObj.pipeDown, imgObj.pipeUp);
+            var pipe = new Pipe(200 + imgObj.pipeDown.width * 3 * 0);
+            var pipe2 = new Pipe(200 + imgObj.pipeDown.width * 3 * 1);
+            var pipe3 = new Pipe(200 + imgObj.pipeDown.width * 3 * 2);
+            var pipe4 = new Pipe(200 + imgObj.pipeDown.width * 3 * 3);
+            var pipe5 = new Pipe(200 + imgObj.pipeDown.width * 3 * 4);
+            var pipe6 = new Pipe(200 + imgObj.pipeDown.width * 3 * 5);
+
+            var text = new TextDate({
+                ctx: ctx,
+                cvs: cvs,
+                font: '900 20px "微软雅黑"',
+                color: 'orangered',
+                align: 'right',
+                baseLine: 'top',
+                x: cvs.width,
+                y: 0
+            });
+
+            /*
+            * 在游戏开始之前，先记录一个时间，认为是游戏开始的时间，
+            * 接下来在定时器里面每次渲染游戏画面时，
+            * 都获取一下时间，减去游戏开的时间，得到游戏进行的时长，
+            * 然后根据这个时长换算单位。
+            * */
+            var startTime = Date.now();
+
+            var timer = setInterval(function () {
+
+                // 计算当前游戏进行了多少时间，
+                // 然后修改text实例的time时间
+                var time = Date.now();
+                var runTime = time - startTime;
+                text.time = runTime;
+
+                // 小鸟中心点x轴和Y轴坐标
+                var birdCoreX = bird.x + bird.w / 2;
+                var birdCoreY = bird.y + bird.h / 2;
+                // 判断小鸟有没有飞出画布或撞向大地，有则游戏结束
+                if (birdCoreY < 0 ||
+                        birdCoreY > (cvs.height - imgObj.land.height) ||
+                        ctx.isPointInPath(birdCoreX, birdCoreY)) {
+                    clearInterval(timer);
+                }
+
+                // 清除画布
+                ctx.clearRect(0, 0, cvs.width, cvs.height);
+
+                // 绘制天空
+                sky.draw();
+                sky.update();
+                sky2.draw();
+                sky2.update();
+
+                // 绘制管道，绘制前先把之前的路径清除掉，防止路径的累加。
+                ctx.beginPath();
+                pipe.draw();
+                pipe.update();
+                pipe2.draw();
+                pipe2.update();
+                pipe3.draw();
+                pipe3.update();
+                pipe4.draw();
+                pipe4.update();
+                pipe5.draw();
+                pipe5.update();
+                pipe6.draw();
+                pipe6.update();
+
+                // 绘制大地
+                land.draw();
+                land.update();
+                land2.draw();
+                land2.update();
+                land3.draw();
+                land3.update();
+                land4.draw();
+                land4.update();
+
+                // 绘制小鸟
+                bird.draw();
+                bird.update();
+
+                // 绘制文本
+                text.drawDate();
+            }, 1000 / 60);
+        });
+    }());
+</script>
+</body>
+</html>

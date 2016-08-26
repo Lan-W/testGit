@@ -8,7 +8,7 @@
 
         this.x = x;
         this.y = y;
-        this.speed = -1;
+        this.speed = -2;
 
     }
 

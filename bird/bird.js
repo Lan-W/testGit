@@ -7,7 +7,7 @@
         this.w = w;
         this.h = h;
         this.speed = 1;
-        this.speedPlus = 0.05;
+        this.speedPlus = 0.1;
         this.frame = 0;
     }
 
@@ -36,15 +36,15 @@
             Bird.ctx.translate(birdCoreX, birdCoreY);
 
             // 旋转坐标系
-            // 约定，下降速度为1时候，旋转10度。
-            var angle = this.speed * 10;
-            // 增加最大旋转角度限度，如果大于45度，则取45。
+            // 约定，下降速度为1时候，旋转5度。
+            var angle = this.speed * 5;
+            // 增加最大旋转角度限度，如果大于35度，则取35。
             angle = angle > 35? 35 : angle;
             Bird.ctx.rotate(util.angleToHu(angle));
 
             // 绘制小鸟
             Bird.ctx.drawImage(Bird.img,
-                Bird.imgWidth * this.frame, 0, Bird.imgWidth, Bird.imgHeight,
+                Bird.imgWidth * (Math.floor(this.frame) % 3), 0, Bird.imgWidth, Bird.imgHeight,
                 -this.w/2, -this.h/2, this.w, this.h);
 
             // 绘制完毕小鸟后回滚
@@ -53,7 +53,7 @@
 
         // 更新下一帧数据
         update: function () {
-            this.frame = ++this.frame > 2? 0 : this.frame;
+            this.frame += 0.2;
             this.y += this.speed;
             this.speed += this.speedPlus;
         },

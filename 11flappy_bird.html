@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<canvas id="cvs" width="800" height="600" style="border: 1px solid red"></canvas>
+<canvas id="cvs" width="800" height="600" style="border: 1px solid teal"></canvas>
 <body>
 <script src="./bird/util.js"></script>
 <script src="./bird/getImg.js"></script>
@@ -30,7 +30,7 @@
 
             // 初始化鸟类
             Bird.init(ctx, cvs, imgObj.bird);
-            var bird = new Bird(50, 50, 50, 50);
+            var bird = new Bird(50, 200, 50, 50);
             bird.bind();
 
             // 初始化大地类，创建四个大地实例
@@ -42,12 +42,12 @@
 
             // 初始化管道类，创建xx个管道实例
             Pipe.init(ctx, cvs, imgObj.pipeDown, imgObj.pipeUp);
-            var pipe = new Pipe(200 + imgObj.pipeDown.width * 3 * 0);
-            var pipe2 = new Pipe(200 + imgObj.pipeDown.width * 3 * 1);
-            var pipe3 = new Pipe(200 + imgObj.pipeDown.width * 3 * 2);
-            var pipe4 = new Pipe(200 + imgObj.pipeDown.width * 3 * 3);
-            var pipe5 = new Pipe(200 + imgObj.pipeDown.width * 3 * 4);
-            var pipe6 = new Pipe(200 + imgObj.pipeDown.width * 3 * 5);
+            var pipe = new Pipe(400 + imgObj.pipeDown.width * 3 * 0);
+            var pipe2 = new Pipe(400 + imgObj.pipeDown.width * 3 * 1);
+            var pipe3 = new Pipe(400 + imgObj.pipeDown.width * 3 * 2);
+            var pipe4 = new Pipe(400 + imgObj.pipeDown.width * 3 * 3);
+            var pipe5 = new Pipe(400 + imgObj.pipeDown.width * 3 * 4);
+            var pipe6 = new Pipe(400 + imgObj.pipeDown.width * 3 * 5);
 
             var text = new TextDate({
                 ctx: ctx,

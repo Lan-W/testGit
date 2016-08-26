@@ -16,7 +16,7 @@
 
         this.x = x;
         this.y = y;
-        this.speed = -1;
+        this.speed = -2;
     }
 
     // 类的初始化方法

@@ -29,7 +29,7 @@
         this.x = x;
         this.space = 100; // 上下管道间的距离
         this._computedY(); // 初始化上下管道的y轴坐标
-        this.speed = -1;
+        this.speed = -2;
         this.speedPlus = -0.00000001;
     }
 
@@ -71,7 +71,7 @@
 
         // 依据管道的坐标和宽高，画路径
         _strokePath: function () {
-            Pipe.ctx.strokeStyle = 'blue';
+            Pipe.ctx.strokeStyle = 'rgba(0,0,0,0)';
             Pipe.ctx.rect(this.x, this.yDown, Pipe.imgWidth, Pipe.imgHeight);
             Pipe.ctx.rect(this.x, this.yUp, Pipe.imgWidth, Pipe.imgHeight);
             Pipe.ctx.stroke();
